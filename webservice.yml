@@ -1,0 +1,77 @@
+---
+# deploy a python web service, and run it under supervisord.
+- hosts: target_hosts
+  vars:
+    geng: 200
+  remote_user: gengwg
+  #sudo: yes
+
+  tasks:
+
+  # this is necessary for ansible to work
+  - name: install the latest version of libselinux-python.
+    yum: name=libselinux-python state=latest
+    become: true
+
+  - name: Install list of packages
+    yum: name={{item}} state=latest
+    with_items:
+      - vim
+      - git
+      - telnet
+      - tmux
+      - python34
+      - python34-pip
+      - supervisor
+    become: true
+
+  - name: Ensure supervisord is started (and enable it at boot)
+    service: name=supervisord state=started enabled=yes
+    become: true
+
+  - name: Install python packages
+    pip: 
+      name: "{{item}}"
+      executable: pip3
+    with_items:
+      - bottle
+      - cassandra-driver
+    become: true
+
+  # change file ownership, group and mode. When specifying mode using octal numbers, first digit should always be 0.
+  - name: Create webservice directory
+    file: path=/home/gengwg/webservice state=directory owner=gengwg group=gengwg mode=0755
+    become: true
+
+  - name: Sync latest code to remote
+    synchronize:
+      src: "web_service.py"
+      dest: "/home/gengwg/webservice"
+      owner: no # do not preserve owner !!
+      group: no # do not preserve group
+      #rsync_path: "sudo rsync" # Use sudo on the remote system
+      rsync_opts:
+        - "--exclude=*~"
+    tags:
+      - webservice
+
+  - name: Sync Config for supervisord into the conf.d directory
+    synchronize:
+      src: "whitelist_updater.ini"
+      dest: "/etc/supervisord.d/"
+      owner: no # do not preserve owner !!
+      group: no # do not preserve group
+      delete: yes
+      rsync_path: "sudo rsync" # Use sudo on the remote system
+      rsync_opts:
+        - "--exclude=*~"
+    become: true
+    notify:
+      - reread supervisord
+    tags:
+      - supervisord
+
+  handlers:
+    - name: reread supervisord
+      shell: /usr/bin/supervisorctl reread && /usr/bin/supervisorctl update && /usr/bin/supervisorctl restart all
+      become: true
