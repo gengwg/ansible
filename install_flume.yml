@@ -1,0 +1,27 @@
+---
+- hosts: flume
+
+  tasks:
+    # this is necessary for ansible to work
+    - name: install the latest version of libselinux-python.
+      yum: name=libselinux-python state=latest
+      become: true
+
+    - name: Install FLume and all
+      yum: name={{item}} state=latest
+      with_items:
+        - vim
+        - git
+        - tree
+        - telnet
+        - tmux
+        - apache-flume 
+      become: true
+
+    - name: Create FLume plugin directory
+      file: 
+        path: /usr/local/flume/plugins.d
+        state: directory
+        mode: 0755
+      become: true
+
