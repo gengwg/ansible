@@ -1,4 +1,7 @@
 ## use it to upgrade and reboot target hosts
+# run multiple times to ensure no reboots necessary
+# recommend run when VM first created. 
+# do not run on production systems, or when reboot is not desired.
 - hosts: target_hosts
   tasks:
     - name: upgrade all packages

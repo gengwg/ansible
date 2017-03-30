@@ -1,3 +1,4 @@
+# install flume on servers
 ---
 - hosts: flume
 
