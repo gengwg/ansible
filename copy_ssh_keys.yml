@@ -21,7 +21,6 @@
       state: present
       key: "{{ lookup('file', '/home/gengwg/ansible/id_rsa_mac.pub') }}"
 
-  tasks:
   - name: Set authorized key for jumphost
     authorized_key:
       user: adminuser
