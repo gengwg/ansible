@@ -1,0 +1,29 @@
+---
+# Copy admin user SSH keys to remote hosts using password for 1st time.
+# Because originally may not have SSH keys copied, e.g. due to newly joining a team.
+# After that subsequent runs do not need to use password any more.
+#
+# You may also want to set up proper SSH configs such as with remote admin user
+# so that ssh command to the hosts do not need user/pass either.
+#
+# Usage:
+#       ansible-playbook -i hosts copy_ssh_keys.yml -v -k
+#
+- name: playbook for copying ssh keys
+  hosts: dgx1
+  user: adminuser
+  gather_facts: False
+
+  tasks:
+  - name: Set authorized key for macbook
+    authorized_key:
+      user: adminuser
+      state: present
+      key: "{{ lookup('file', '/home/gengwg/ansible/id_rsa_mac.pub') }}"
+
+  tasks:
+  - name: Set authorized key for jumphost
+    authorized_key:
+      user: adminuser
+      state: present
+      key: "{{ lookup('file', '/home/gengwg/.ssh/id_rsa.pub') }}"
