@@ -1,5 +1,11 @@
 # Ansible
-ansible playbooks
+
+Ansible playbooks
+
+To run Ansible on remote host the host need to support Python.
+When using the ping module Ansible creates a little Python script that
+is copied to the remote and then runs the python script on the remote
+host. Network equipment typically doesn't support Python.
 
 ## Configuration
 
