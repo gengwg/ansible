@@ -25,5 +25,7 @@ http://docs.ansible.com/ansible/intro_configuration.html
 
 ```
 ansible -i hosts somemachines -m command -a 'lsb_release -a'
+
+ansible -i hosts some-dgx1 -m shell -a "nvidia-docker --version && nvidia-docker run nvidia-smi"
 ```
 
