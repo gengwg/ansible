@@ -31,6 +31,8 @@ ansible -i hosts some-dgx1 -m shell -a "nvidia-docker --version && nvidia-docker
 
 ## Playbook
 
+Always quote template expression brackets.
+
 ```
 ERROR! Syntax Error while loading YAML.
   found unacceptable key (unhashable type: 'AnsibleMapping')
