@@ -56,3 +56,11 @@ Should be written as:
     with_items:
       - "{{ foo }}"
 ```
+
+If always a couple hosts timeout here and there, increase the SSH timeout in `ansible.cfg`:
+
+```
+ # SSH timeout
+-#timeout = 10
++timeout = 20
+```
