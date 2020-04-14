@@ -4,6 +4,7 @@
   vars:
     geng: 200
   remote_user: gengwg
+  gather_facts: False
   #sudo: yes
 
   tasks:
