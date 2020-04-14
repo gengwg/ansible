@@ -29,6 +29,12 @@ ansible -i hosts somemachines -m command -a 'lsb_release -a'
 ansible -i hosts some-dgx1 -m shell -a "nvidia-docker --version && nvidia-docker run nvidia-smi"
 ```
 
+* Providing the sudo Password
+
+```
+ansible -i hosts test -m ping --ask-become-pass
+ansible-playbook -i hosts myplaybook.yml --ask-become-pass
+```
 ## Playbook
 
 Always quote template expression brackets.
