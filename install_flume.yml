@@ -1,7 +1,8 @@
 # install flume on servers
 ---
 - hosts: flume
-
+  gather_facts: False
+  
   tasks:
     # this is necessary for ansible to work
     - name: install the latest version of libselinux-python.
