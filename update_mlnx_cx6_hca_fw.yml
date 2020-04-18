@@ -1,0 +1,59 @@
+---
+- hosts: test
+  vars:
+    fw_name: fw-ConnectX6-rel-20_27_2008-MCX653106A-ECA_Ax-UEFI-14.20.22-FlexBoot-3.5.901.bin
+  name: Playbook to update Mellanox ConnectX6 Firmware
+  remote_user: useradmin
+  gather_facts: False
+
+  tasks:
+
+    - name: copy fw to target
+      copy:
+        src: ../{{ fw_name  }}
+        dest: /tmp/{{ fw_name  }}
+
+    - name: reset fw in case previous update was pending
+      command: mstfwreset -d {{ item  }}:00.0 reset --yes
+      become: true
+      ignore_errors: yes
+      with_items:
+        - "04"
+        - "0b"
+        - "84"
+        - "8b"
+
+    - name: burn fw
+      command: mstflint -d {{ item  }}:00.0 -i /tmp/{{ fw_name }} -y burn
+      become: true
+      ignore_errors: yes
+      with_items:
+        - "04"
+        - "0b"
+        - "84"
+        - "8b"
+
+    - name: reset fw again for update to take effect
+      command: mstfwreset -d {{ item  }}:00.0 reset --yes
+      become: true
+      ignore_errors: yes
+      with_items:
+        - "04"
+        - "0b"
+        - "84"
+        - "8b"
+
+"""
+Remember to add the -y option to all the commands in the script! Otherwise the playbook run will hang forever.
+
+I tested some HCA before running the playbook, so if it sees that hca it will ask for confirmation:
+
+$ sudo mstflint -d 04:00.0 -i /tmp/fw-ConnectX6-rel-20_27_2008-MCX653106A-ECA_Ax-UEFI-14.20.22-FlexBoot-3.5.901.bin burn
+
+    Current FW version on flash:  20.27.2008
+    New FW version:               20.27.2008
+
+    Note: The new FW version is the same as the current FW version on flash.
+
+ Do you want to continue ? (y/n) [n] :
+"""
