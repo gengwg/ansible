@@ -33,8 +33,9 @@ ansible -i hosts some-dgx1 -m shell -a "lspci | grep MT2890"
 
 ```
 ansible -i hosts test -m ping --ask-become-pass
-ansible-playbook -i hosts myplaybook.yml --ask-become-pass
 ansible -i hosts test -m shell -a 'cat /etc/sudoers' -b --ask-become-pass
+ansible -i hosts test -m shell -a "cat /etc/sudoers" -b -K  # shorter form equivalent to above
+ansible-playbook -i hosts myplaybook.yml --ask-become-pass
 ```
 
 ## Examples
