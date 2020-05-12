@@ -35,6 +35,15 @@ ansible -i hosts some-dgx1 -m shell -a "lspci | grep MT2890"
 ansible -i hosts test -m ping --ask-become-pass
 ansible-playbook -i hosts myplaybook.yml --ask-become-pass
 ```
+
+## Examples
+
+Check OFED versions:
+
+```
+$ ansible -i hosts mydgx -m shell -a 'apt list --installed | grep mlnx-ofed-kernel' > /tmp/ofed_version.txt
+```
+
 ## Playbook
 
 Always quote template expression brackets.
