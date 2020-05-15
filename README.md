@@ -38,6 +38,30 @@ ansible -i hosts test -m shell -a "cat /etc/sudoers" -b -K  # shorter form equiv
 ansible-playbook -i hosts myplaybook.yml --ask-become-pass
 ```
 
+* Check power supply units (PSU) status (worked on CentOS 7)
+
+```
+ansible -i hosts test -m shell -a 'ipmitool sdr type "Power Supply"' -b --ask-become-pass |  tee psu-status.txt
+
+example output:
+
+# Dell PowerEdge R740xd
+dell-host | CHANGED | rc=0 >>
+PS Redundancy    | 77h | ok  |  7.1 | Fully Redundant
+Status           | 85h | ok  | 10.1 | Presence detected
+Status           | 86h | ok  | 10.2 | Presence detected
+
+# Nvidia DGX1
+
+dgx-host | CHANGED | rc=0 >>
+PSU Alert        | 34h | ns  | 208.1 | Event-Only
+PSU Redundancy   | E8h | ok  | 21.1 | Non-Redundant: Insufficient Resources
+PSU1 Status      | E0h | ok  | 10.1 | Presence detected, Power Supply AC lost
+PSU2 Status      | E1h | ok  | 10.2 | Presence detected, Power Supply AC lost
+PSU3 Status      | E2h | ok  | 10.3 | Presence detected
+PSU4 Status      | E3h | ok  | 10.4 | Presence detected
+```
+
 ## Examples
 
 Check OFED versions:
