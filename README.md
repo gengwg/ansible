@@ -52,7 +52,6 @@ Status           | 85h | ok  | 10.1 | Presence detected
 Status           | 86h | ok  | 10.2 | Presence detected
 
 # Nvidia DGX1
-
 dgx-host | CHANGED | rc=0 >>
 PSU Alert        | 34h | ns  | 208.1 | Event-Only
 PSU Redundancy   | E8h | ok  | 21.1 | Non-Redundant: Insufficient Resources
