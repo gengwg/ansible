@@ -19,6 +19,18 @@ Only 1 configuration file is processed. First one wins in the below list.
 
 http://docs.ansible.com/ansible/intro_configuration.html
 
+```
+$ head ansible.cfg
+# config file for ansible -- https://ansible.com/
+# ===============================================
+
+# nearly all parameters can be overridden in ansible-playbook
+# or with command line flags. ansible will read ANSIBLE_CONFIG,
+# ansible.cfg in the current working directory, .ansible.cfg in
+# the home directory or /etc/ansible/ansible.cfg, whichever it
+# finds first
+```
+
 ## Usage
 
 * Run a bash command against some machines.
