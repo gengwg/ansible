@@ -1,0 +1,19 @@
+---
+#
+# Usage:
+#       ansible-playbook -i hosts update-bashrc.yml
+#
+
+- name: playbook for update bashrc 
+  hosts: test2
+  user: myuser
+  gather_facts: false
+  ignore_unreachable: true
+
+
+  tasks:
+    - name: Insert a line at the end of a file.
+      lineinfile:
+        path: /home/gengwg/.bashrc
+        line: export SSH_AGENT_SOCK=$SSH_AUTH_SOCK
+        create: yes
