@@ -1,0 +1,24 @@
+---
+#
+# Usage:
+#       ansible-playbook -i hosts file.yml -b -K
+#
+
+- name: pass environment variable to sudo through register
+  hosts: test2
+
+  tasks:
+
+  - name: get environment variable through normal user
+    shell: echo $SSH_AUTH_SOCK
+    register: foo
+    become: false # this is to use normal user shell env, otherwise default to root user
+
+  - name: debug
+    debug:
+      msg: "Env Var is {{ foo.stdout }} !"
+
+  - name: provision pem using env var from normal user
+    shell: SSH_AGENT_SOCK={{ foo.stdout }} /usr/local/bin/mycmd
+    become: true # sudo here to use env var from normal user
+
