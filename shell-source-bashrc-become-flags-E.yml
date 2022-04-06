@@ -1,0 +1,20 @@
+---
+#
+# source bashrc, then use the env var in sudo -E
+# 
+# Usage:
+#       ansible-playbook -i hosts file.yml -K
+#
+
+- name: playbook for provisioning certs
+  hosts: test2
+  gather_facts: false
+  #gather_facts: true
+  
+
+  tasks:
+
+  - name: provision pem
+    shell: source ~/.bashrc && SSH_AGENT_SOCK=$SSH_AUTH_SOCK /usr/local/bin/provision-cert
+    become: true
+    become_flags: '-E'
