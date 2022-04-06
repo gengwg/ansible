@@ -1,0 +1,25 @@
+- hosts: test2 # hack for ansible_env to work
+
+- name: Test local and remote env var
+  hosts: test2
+  gather_facts: true
+
+  tasks:
+    - name: Test with local env value
+      vars:
+        destination: >-
+          "{{ lookup('env', 'SSH_AUTH_SOCK') }}"
+      debug:
+        msg: "{{ destination }}"
+
+    - name: Test remote env variable
+      shell: echo $SSH_AUTH_SOCK
+      register: foo
+
+    - name: debug
+      debug:
+        msg: "Testing remote env variable: {{ foo.stdout }}"
+
+    - name: debug 2
+      debug:
+        msg: "Testing remote env variable 2nd way: {{ ansible_env.SSH_AUTH_SOCK }}"
