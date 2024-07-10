@@ -7,6 +7,14 @@ When using the ping module Ansible creates a little Python script that
 is copied to the remote and then runs the python script on the remote
 host. Network equipment typically doesn't support Python.
 
+## Installation
+
+- Centos 9:
+
+```
+$ sudo dnf install ansible
+```
+
 ## Configuration
 
 Only 1 configuration file is processed. First one wins in the below list. 
