@@ -15,6 +15,6 @@
   tasks:
 
   - name: provision pem
-    shell: source ~/.bashrc && SSH_AGENT_SOCK=$SSH_AUTH_SOCK /usr/local/bin/provision-cert
+    ansible.builtin.shell: source ~/.bashrc && SSH_AGENT_SOCK=$SSH_AUTH_SOCK /usr/local/bin/provision-cert
     become: true
     become_flags: '-E'

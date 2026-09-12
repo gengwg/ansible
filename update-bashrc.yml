@@ -6,14 +6,14 @@
 
 - name: playbook for update bashrc 
   hosts: test2
-  user: myuser
+  remote_user: myuser
   gather_facts: false
   ignore_unreachable: true
 
 
   tasks:
     - name: Insert a line at the end of a file.
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: /home/gengwg/.bashrc
         line: export SSH_AGENT_SOCK=$SSH_AUTH_SOCK
         create: yes
