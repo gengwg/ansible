@@ -6,11 +6,11 @@
   tasks:
     # this is necessary for ansible to work
     - name: install the latest version of libselinux-python.
-      yum: name=libselinux-python state=latest
+      ansible.builtin.yum: name=libselinux-python state=latest
       become: true
 
     - name: Install FLume and all
-      yum: name={{item}} state=latest
+      ansible.builtin.yum: name={{item}} state=latest
       with_items:
         - vim
         - git
@@ -21,7 +21,7 @@
       become: true
 
     - name: Create FLume plugin directory
-      file: 
+      ansible.builtin.file: 
         path: /usr/local/flume/plugins.d
         state: directory
         mode: 0755

@@ -9,17 +9,17 @@
       vars:
         destination: >-
           "{{ lookup('env', 'SSH_AUTH_SOCK') }}"
-      debug:
+      ansible.builtin.debug:
         msg: "{{ destination }}"
 
     - name: Test remote env variable
-      shell: echo $SSH_AUTH_SOCK
+      ansible.builtin.shell: echo $SSH_AUTH_SOCK
       register: foo
 
     - name: debug
-      debug:
+      ansible.builtin.debug:
         msg: "Testing remote env variable: {{ foo.stdout }}"
 
     - name: debug 2
-      debug:
+      ansible.builtin.debug:
         msg: "Testing remote env variable 2nd way: {{ ansible_env.SSH_AUTH_SOCK }}"

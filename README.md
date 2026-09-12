@@ -15,6 +15,12 @@ host. Network equipment typically doesn't support Python.
 $ sudo dnf install ansible
 ```
 
+Install the required collections (some playbooks use `ansible.posix`):
+
+```
+$ ansible-galaxy collection install -r requirements.yml
+```
+
 ## Configuration
 
 Only 1 configuration file is processed. First one wins in the below list. 
